@@ -1,3 +1,7 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
+  scope :api, defaults: { format: :json } do
+    mount_devise_token_auth_for 'User', at: 'auth', controllers: { sessions: :sessions }
+  end
 end
