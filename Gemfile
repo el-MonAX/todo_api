@@ -8,9 +8,13 @@ git_source(:github) do |repo_name|
 end
 
 gem 'bcrypt', '~> 3.1.7'
+gem 'carrierwave', '~> 1.2'
 gem 'coffee-rails'
 gem 'devise', '~> 4.4'
 gem 'devise_token_auth', '~> 0.1.43'
+gem 'figaro', '~> 1.1'
+gem 'file_validators', '~> 2.1.0'
+gem 'fog-aws', '~> 1.4'
 gem 'jbuilder', '~> 2.5'
 gem 'pg'
 gem 'puma', '~> 3.7'
