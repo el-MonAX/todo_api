@@ -1,20 +1,21 @@
 # frozen_string_literal: true
 
 # TasksController
-class TasksController < ApplicationController
+class Api::V1::TasksController < ApplicationController
   before_action :set_task, only: %i[show update destroy]
+  before_action :set_project, only: %i[index create]
 
   def index
-    @tasks = Task.all
+    @tasks = @project.tasks
   end
 
   def show; end
 
   def create
-    @task = Task.new(task_params)
+    @task = @project.tasks.build(task_params)
 
     if @task.save
-      render :show, status: :created, location: @task
+      redirect_to api_v1_root_path
     else
       render json: @task.errors, status: :unprocessable_entity
     end
@@ -22,7 +23,7 @@ class TasksController < ApplicationController
 
   def update
     if @task.update(task_params)
-      render :show, status: :ok, location: @task
+      redirect_to api_v1_root_path
     else
       render json: @task.errors, status: :unprocessable_entity
     end
@@ -38,7 +39,11 @@ class TasksController < ApplicationController
     @task = Task.find(params[:id])
   end
 
+  def set_project
+    @project = Project.find(params[:project_id])
+  end
+
   def task_params
-    params.require(:task).permit(:name, :completed)
+    params.permit(:name, :completed, :project_id)
   end
 end

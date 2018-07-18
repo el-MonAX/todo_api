@@ -1,20 +1,21 @@
 # frozen_string_literal: true
 
 # CommentsController
-class CommentsController < ApplicationController
+class Api::V1::CommentsController < ApplicationController
   before_action :set_comment, only: %i[show update destroy]
+  before_action :set_task, only: %i[create]
 
   def index
-    @comments = Comment.all
+    @comments = @task.comments
   end
 
   def show; end
 
   def create
-    @comment = Comment.new(comment_params)
+    @comment = @task.comment.build(comment_params)
 
     if @comment.save
-      render :show, status: :created, location: @comment
+      rendirect_to api_v1_root_path
     else
       render json: @comment.errors, status: :unprocessable_entity
     end
@@ -22,7 +23,7 @@ class CommentsController < ApplicationController
 
   def update
     if @comment.update(comment_params)
-      render :show, status: :ok, location: @comment
+      rendirect_to api_v1_root_path
     else
       render json: @comment.errors, status: :unprocessable_entity
     end
@@ -38,7 +39,11 @@ class CommentsController < ApplicationController
     @comment = Comment.find(params[:id])
   end
 
+  def set_task
+    @task = task.find(params[:task_id])
+  end
+
   def comment_params
-    params.require(:comment).permit(:text, :file)
+    params.permit(:text, :file, :task_id)
   end
 end
