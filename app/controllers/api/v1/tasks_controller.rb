@@ -1,17 +1,35 @@
-# frozen_string_literal: true
-
-# TasksController
 class Api::V1::TasksController < ApplicationController
   load_and_authorize_resource :project, through: :current_user
   load_and_authorize_resource through: :project, shallow: true
+
+  resource_description do
+    short 'Tasks'
+    formats ['json']
+  end
+
+  # GET /tasks
+  # GET /tasks.json
+  api :GET, "/projects/:project_id/tasks", "Get list of tasks"
+  param :project_id, String, "ID of the task`s project", required: true
 
   def index
     render json: @tasks
   end
 
+  # GET /tasks/1
+  # GET /tasks/1.json
+  api :GET, "/tasks/:id", "Show specific task"
+  param :id, String, "ID of the task", required: true
+
   def show
     render json: @task
   end
+
+  # POST /tasks
+  # POST /tasks.json
+  api :POST, "/projects/:project_id/tasks", "Create a task"
+  param :project_id, String, "ID of the task`s project", required: true
+  param :name, String, "Name of the task", required: true
 
   def create
     @task = @project.tasks.build(task_params)
@@ -23,6 +41,11 @@ class Api::V1::TasksController < ApplicationController
     end
   end
 
+  api :PUT, "/tasks/:id", "Update a task"
+  param :id, String, "ID of the task", required: true
+  param :name, String, "Name of the task", required: true
+  param :move, String, "Direction of the task move", required: false
+
   def update
     command = UpdateTask.call(@task, task_params)
 
@@ -32,6 +55,9 @@ class Api::V1::TasksController < ApplicationController
       render json: @task.errors, status: :unprocessable_entity
     end
   end
+
+  api :DELETE, "/tasks/:id", "Delete a task"
+  param :id, String, "ID of the task", required: true
 
   def destroy
     @task.destroy

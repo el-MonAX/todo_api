@@ -46,6 +46,8 @@ GEM
       activerecord (>= 3.0)
     addressable (2.5.2)
       public_suffix (>= 2.0.2, < 4.0)
+    apipie-rails (0.5.9)
+      rails (>= 4.1)
     arel (9.0.0)
     bcrypt (3.1.12)
     builder (3.2.3)
@@ -244,6 +246,7 @@ PLATFORMS
 
 DEPENDENCIES
   acts_as_list (~> 0.9.10)
+  apipie-rails (~> 0.5.5)
   bcrypt (~> 3.1.7)
   byebug
   cancancan (~> 2.1)
