@@ -7,20 +7,24 @@ git_source(:github) do |repo_name|
   "https://github.com/#{repo_name}.git"
 end
 
+gem 'acts_as_list', '~> 0.9.10'
 gem 'bcrypt', '~> 3.1.7'
+gem 'cancancan', '~> 2.1'
 gem 'carrierwave', '~> 1.2'
+gem 'carrierwave-base64', '~> 2.6'
 gem 'coffee-rails'
-gem 'devise', '~> 4.4'
-gem 'devise_token_auth', '~> 0.1.43'
 gem 'figaro', '~> 1.1'
 gem 'file_validators', '~> 2.1.0'
 gem 'fog-aws', '~> 1.4'
 gem 'jbuilder', '~> 2.5'
+gem 'json_matchers', '~> 0.7'
 gem 'pg'
 gem 'puma', '~> 3.7'
 gem 'rack-cors', require: 'rack/cors'
 gem 'rails', '~> 5.2'
 gem 'sass-rails', '~> 5.0.7'
+gem 'jwt', '~> 2.1.0'
+gem 'simple_command', '~> 0.0.9'
 gem 'turbolinks', '~> 5'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'uglifier', '>= 1.3.0'

@@ -3,7 +3,11 @@
 Rails.application.routes.draw do
   namespace :api do
     namespace :v1 do
-      mount_devise_token_auth_for 'User', at: 'auth', controllers: { sessions: 'api/v1/sessions', registrations: 'api/v1/registrations' }
+      namespace :auth do
+        post 'register', to: 'users#register'
+        post 'login',    to: 'users#login'
+      end
+
       root to: 'projects#index'
       resources :projects do
         resources :tasks, only: %i[index create] do

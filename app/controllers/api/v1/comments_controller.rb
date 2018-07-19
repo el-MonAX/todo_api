@@ -2,20 +2,23 @@
 
 # CommentsController
 class Api::V1::CommentsController < ApplicationController
-  before_action :set_comment, only: %i[show update destroy]
-  before_action :set_task, only: %i[create]
+  load_and_authorize_resource :project, through: :current_user
+  load_and_authorize_resource :task, through: :project
+  load_and_authorize_resource through: :task, shallow: true
 
   def index
-    @comments = @task.comments
+    render json: @comments
   end
 
-  def show; end
+  def show
+    render json: @comment
+  end
 
   def create
-    @comment = @task.comment.build(comment_params)
+    @comment = @task.comments.build(comment_params)
 
     if @comment.save
-      rendirect_to api_v1_root_path
+      render json: @comment, status: :created
     else
       render json: @comment.errors, status: :unprocessable_entity
     end
@@ -23,7 +26,7 @@ class Api::V1::CommentsController < ApplicationController
 
   def update
     if @comment.update(comment_params)
-      rendirect_to api_v1_root_path
+      render json: @task, status: :ok
     else
       render json: @comment.errors, status: :unprocessable_entity
     end
@@ -35,15 +38,7 @@ class Api::V1::CommentsController < ApplicationController
 
   private
 
-  def set_comment
-    @comment = Comment.find(params[:id])
-  end
-
-  def set_task
-    @task = task.find(params[:task_id])
-  end
-
   def comment_params
-    params.permit(:text, :file, :task_id)
+    params.permit(:text, :file, :file_cache, :remote_file_url, :task_id)
   end
 end

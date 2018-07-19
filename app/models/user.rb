@@ -2,8 +2,12 @@
 
 # User
 class User < ApplicationRecord
-  devise :database_authenticatable, :registerable, :rememberable, :validatable
-  include DeviseTokenAuth::Concerns::User
-  validates :email, :encrypted_password, presence: true
+  has_secure_password
+
   has_many :projects, dependent: :destroy
+
+  validates :username, presence: true
+  validates :username, uniqueness: true
+  validates :username, length: { in: 3..50 }
+  validates :password, length: { in: 8..72 }
 end

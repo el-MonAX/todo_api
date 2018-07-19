@@ -12,6 +12,9 @@ module TodoApi
   class Application < Rails::Application
     config.load_defaults 5.1
 
+    config.eager_load_paths << Rails.root.join('lib')
+    config.autoload_paths << Rails.root.join('lib')
+
     config.api_only = true
     config.middleware.use Rack::Cors do
       allow do

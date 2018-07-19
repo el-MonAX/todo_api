@@ -35,6 +35,8 @@ ActiveRecord::Schema.define(version: 2018_07_17_125119) do
   create_table "tasks", force: :cascade do |t|
     t.string "name"
     t.boolean "completed", default: false
+    t.integer "position"
+    t.datetime "deadline"
     t.bigint "project_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -42,16 +44,10 @@ ActiveRecord::Schema.define(version: 2018_07_17_125119) do
   end
 
   create_table "users", force: :cascade do |t|
-    t.string "provider", default: "email", null: false
-    t.string "uid", default: "", null: false
-    t.string "encrypted_password", default: "", null: false
-    t.datetime "remember_created_at"
-    t.string "email"
-    t.json "tokens"
+    t.string "username"
+    t.string "password_digest"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["email"], name: "index_users_on_email", unique: true
-    t.index ["uid", "provider"], name: "index_users_on_uid_and_provider", unique: true
   end
 
   add_foreign_key "comments", "tasks"

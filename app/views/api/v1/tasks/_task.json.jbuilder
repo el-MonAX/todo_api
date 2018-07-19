@@ -1,2 +1,3 @@
-json.extract! task, :id, :name, :completed, :comments, :created_at, :updated_at
-json.url api_v1_task_url(task, format: :json)
+json.extract! project, :id, :name, :created_at, :updated_at
+
+json.url api_v1_project_url(project, format: :json)
