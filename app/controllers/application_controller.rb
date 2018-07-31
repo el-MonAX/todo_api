@@ -3,6 +3,8 @@
 class ApplicationController < ActionController::API
   before_action :authenticate_request
   before_action :current_ability, except: [:login, :register]
+  rescue_from ActiveRecord::RecordNotFound, :with => :record_not_found
+  rescue_from ActionController::RoutingError, :with => :record_not_found
 
   attr_reader :current_user
   attr_reader :current_ability
@@ -16,5 +18,9 @@ class ApplicationController < ActionController::API
 
   def current_ability
     @current_ability ||= Ability.new(AuthorizeApiRequest.call(request.headers).result)
+  end
+
+  def record_not_found(error)
+    render json: { error: error.message }, status: :not_found
   end
 end
