@@ -11,8 +11,6 @@ RSpec.describe "Comments", type: :request do
   let!(:token) { AuthenticateUser.call(user.username, user.password).result }
   let!(:headers) { {authorization: token, accept: 'application/json'} }
 
-
-
   describe "GET /comments" do
     it "gets list of comments" do
       comments
@@ -28,6 +26,15 @@ RSpec.describe "Comments", type: :request do
       post "/api/v1/projects/#{project.id}/tasks/#{task.id}/comments", headers: headers, params: comment_params
       expect(response).to have_http_status(201)
       expect(response).to match_response_schema('comment')
+    end
+  end
+
+  describe "POST /comments" do
+    it "creates new comment with file" do
+      comment_params = FactoryBot.attributes_for(:comment, :with_file)
+      post "/api/v1/projects/#{project.id}/tasks/#{task.id}/comments", headers: headers, params: comment_params
+      expect(response).to have_http_status(201)
+      expect(response).to match_response_schema('comment_with_file')
     end
   end
 

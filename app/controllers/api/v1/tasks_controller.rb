@@ -7,8 +7,6 @@ class Api::V1::TasksController < ApplicationController
     formats ['json']
   end
 
-  # GET /tasks
-  # GET /tasks.json
   api :GET, "/projects/:project_id/tasks", "Get list of tasks"
   param :project_id, String, "ID of the task`s project", required: true
 
@@ -16,8 +14,6 @@ class Api::V1::TasksController < ApplicationController
     render json: @tasks
   end
 
-  # GET /tasks/1
-  # GET /tasks/1.json
   api :GET, "/tasks/:id", "Show specific task"
   param :id, String, "ID of the task", required: true
 
@@ -25,8 +21,6 @@ class Api::V1::TasksController < ApplicationController
     render json: @task
   end
 
-  # POST /tasks
-  # POST /tasks.json
   api :POST, "/projects/:project_id/tasks", "Create a task"
   param :project_id, String, "ID of the task`s project", required: true
   param :name, String, "Name of the task", required: true

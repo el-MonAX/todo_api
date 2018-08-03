@@ -6,16 +6,12 @@ class Api::V1::ProjectsController < ApplicationController
     formats ['json']
   end
 
-  # GET /projects
-  # GET /projects.json
   api :GET, "/projects", "Get list of projects"
 
   def index
     render json: @projects
   end
 
-  # GET /projects/1
-  # GET /projects/1.json
   api :GET, "/projects/:id", "Show specific project"
   param :id, String, "ID of the project", required: true
 
@@ -23,8 +19,6 @@ class Api::V1::ProjectsController < ApplicationController
     render json: @project
   end
 
-  # POST /projects
-  # POST /projects.json
   api :POST, "/projects", "Create a project"
   param :name, String, "Name of the project", required: true
 

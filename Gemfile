@@ -26,6 +26,7 @@ gem 'rack-cors', require: 'rack/cors'
 gem 'rails', '~> 5.2'
 gem 'sass-rails', '~> 5.0.7'
 gem 'simple_command', '~> 0.0.9'
+gem 'simplecov', require: false, group: :test
 gem 'turbolinks', '~> 5'
 gem 'tzinfo-data', platforms: %i[mingw mswin x64_mingw jruby]
 gem 'uglifier', '>= 1.3.0'

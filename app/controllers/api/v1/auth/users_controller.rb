@@ -6,7 +6,6 @@ class Api::V1::Auth::UsersController < ApplicationController
     formats ['json']
   end
 
-  # POST /register
   api :POST, '/register', 'Register user in the app'
   param :username, String, desc: 'Username for login', required: true
   param :password, String, desc: 'Password for login', required: true
@@ -27,7 +26,6 @@ class Api::V1::Auth::UsersController < ApplicationController
     end
   end
 
-  # POST /login
   api :POST, '/login', 'Log in user in the app'
   param :username, String, desc: 'Username for login', required: true
   param :password, String, desc: 'Password for login', required: true
